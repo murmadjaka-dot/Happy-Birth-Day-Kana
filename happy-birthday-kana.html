@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy Birthday Kana 🎉</title>
+  <style>
+    :root {
+      --bg: #FFF7F9;
+      --card: #ffffff;
+      --accent: #FF6B9A;
+      --muted: #7a7a7a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin:0;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at 10% 10%, #fff0f4 0%, var(--bg) 40%), linear-gradient(180deg, #fff 0%, #fff6fb 100%);
+      color: #222;
+      min-height:100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow:hidden;
+      position: relative;
+    }
+
+    /* 🌟 Background Title */
+    .background-title {
+      position: absolute;
+      top: 50px;
+      width: 100%;
+      text-align: center;
+      font-size: 48px;
+      color: rgba(255,107,154,0.2);
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      z-index: 0;
+    }
+
+    .card {
+      width:100%;
+      max-width: 900px;
+      background: var(--card);
+      border-radius: 24px;
+      box-shadow: 0 10px 40px rgba(255,107,154,0.15);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px 60px;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 36px;
+      color: var(--accent);
+      z-index: 2;
+    }
+
+    p.lead {
+      margin-top: 10px;
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.6;
+      transition: opacity 0.6s ease;
+    }
+
+    /* 🎂 Kue */
+    .cake-wrap {
+      position: relative;
+      margin-top: 40px;
+      cursor: pointer;
+      transition: transform 1s ease, opacity 0.8s ease;
+    }
+    .cake {
+      font-size: 150px;
+      display: block;
+      animation: bounce 2s infinite ease-in-out;
+    }
+    @keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);} }
+
+    .cake-text {
+      position: absolute;
+      top: -45px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--accent);
+      text-shadow: 0 0 6px rgba(255,255,255,0.8);
+      animation: floatText 2s ease-in-out infinite;
+      transition: opacity 0.8s ease, transform 1s ease;
+    }
+
+    @keyframes floatText {
+      0%,100% { transform: translate(-50%, -2px); }
+      50% { transform: translate(-50%, 3px); }
+    }
+
+    .cake-wrap.shrink {
+      transform: scale(0.1);
+      opacity: 0;
+    }
+
+    .cake-wrap.shrink .cake-text {
+      opacity: 0;
+      transform: translate(-50%, -20px);
+    }
+
+    /* 📸 Foto & Pesan */
+    .photo-message {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeInUp 1.4s ease forwards;
+      margin-top: 40px; /* Geser sedikit ke bawah */
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(-5px); }
+    }
+
+    .photo-message img {
+      width: 240px;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(255,107,154,0.35);
+      margin-bottom: 15px;
+      transition: all 0.8s ease;
+    }
+
+    .photo-message p {
+      max-width: 480px;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* 🌟 Efek Bintang */
+    .star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    /* 💕 Efek Hati */
+    .floating-heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 18px;
+      color: #FF6B9A;
+      opacity: 0.8;
+      animation: floatUp 6s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.6); opacity: 0; }
+    }
+
+    canvas#confetti {
+      position: fixed;
+      pointer-events: none;
+      inset: 0;
+      z-index: 60;
+    }
+
+    footer {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 🌟 Efek & Background -->
+  <div id="stars"></div>
+  <div id="hearts"></div>
+  <div class="background-title">Happy Birthday Kana 🎉</div>
+
+  <div class="card">
+    <h1>Selamat Ulang Tahun, Kana 🥳</h1>
+    <p class="lead" id="leadText">Klik kuenya untuk melihat kejutan kecil 🎂</p>
+
+    <!-- 🎂 Kue -->
+    <div class="cake-wrap" id="cake">
+      <div class="cake-text">Untuk Kana 💖</div>
+      🎂
+    </div>
+
+    <!-- 📸 Foto + Pesan -->
+    <div class="photo-message" id="photoMessage">
+      <img src="WhatsApp Image 2025-07-09 at 20.21.35_6b63e88b.jpg" alt="Kana">
+      <p>Happy Birthday Kana 🥳🥳  
+      Semoga mulai hari ini dan seterusnya menjadi hari² yang spesial dan penuh kebahagiaan.  
+      Terimakasih sudah berjuang hingga saat ini, semoga apa yang telah kamu lalui selama ini menjadi motivasi kamu untuk menjalani hari agar menjadi lebih baik.</p>
+      <p>I LOOOVVEEEEE YOUUUUUU HEHEHEHE💕</p>
+    </div>
+
+    <footer>Dari orang yang selalu mencintai kamu hehehe.</footer>
+  </div>
+
+  <canvas id="confetti"></canvas>
+
+  <!-- 🎵 Musik otomatis -->
+  <audio id="bg-music" autoplay loop>
+    <source src="happy_birthday_pixabay.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // 🌟 Bintang
+    const starsContainer = document.getElementById("stars");
+    for(let i=0; i<80; i++){
+      const star=document.createElement("div");
+      star.className="star";
+      star.style.top=Math.random()*100+"%";
+      star.style.left=Math.random()*100+"%";
+      star.style.animationDelay=(Math.random()*3)+"s";
+      star.style.width=star.style.height=Math.random()*3+1+"px";
+      starsContainer.appendChild(star);
+    }
+
+    // 💞 Hati
+    const heartsContainer=document.getElementById("hearts");
+    const heartSymbols=["💖","❤️","💗","💕"];
+    function createHeart(){
+      const heart=document.createElement("div");
+      heart.className="floating-heart";
+      heart.textContent=heartSymbols[Math.floor(Math.random()*heartSymbols.length)];
+      heart.style.left=Math.random()*100+"%";
+      heart.style.fontSize=(Math.random()*12+14)+"px";
+      heart.style.animationDuration=(Math.random()*3+5)+"s";
+      heartsContainer.appendChild(heart);
+      setTimeout(()=>heart.remove(),8000);
+    }
+    setInterval(createHeart,500);
+
+    // 🎉 Confetti
+    const canvas=document.getElementById('confetti');
+    const ctx=canvas.getContext('2d');
+    let W=innerWidth,H=innerHeight;
+    canvas.width=W; canvas.height=H;
+    window.addEventListener('resize',()=>{W=innerWidth;H=innerHeight;canvas.width=W;canvas.height=H;});
+    function random(min,max){return Math.random()*(max-min)+min;}
+    function launchConfetti(){
+      const pieces=[];
+      for(let i=0;i<150;i++){
+        pieces.push({x:random(0,W),y:random(-H,0),vx:random(-2,2),vy:random(2,6),r:random(6,10),color:['#FF6B9A','#FFD166','#6DD3FF','#A78BFA','#FF9AA2'][Math.floor(random(0,5))],rot:random(0,360),vr:random(-6,6)});
+      }
+      let t=0;
+      function frame(){
+        ctx.clearRect(0,0,W,H);
+        for(const p of pieces){
+          p.x+=p.vx;p.y+=p.vy;p.vy+=0.06;p.rot+=p.vr;
+          ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+          ctx.fillStyle=p.color;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6);
+          ctx.restore();
+        }
+        t++;if(t<200)requestAnimationFrame(frame);
+      }
+      frame();
+    }
+
+    // 🎂 Klik kue
+    const cake = document.getElementById('cake');
+    const photoMsg = document.getElementById('photoMessage');
+    const leadText = document.getElementById('leadText');
+
+    cake.addEventListener('click', ()=>{
+      cake.classList.add('shrink');
+      leadText.style.opacity = 0;
+      launchConfetti();
+      setTimeout(()=>{
+        cake.style.display='none';
+        photoMsg.style.display='flex';
+      },1000);
+    });
+
+    // 🎵 Autoplay fix untuk mobile
+    const bgMusic=document.getElementById("bg-music");
+    document.body.addEventListener("click",()=>bgMusic.play(),{once:true});
+  </script>
+</body>
+</html>
